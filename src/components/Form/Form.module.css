@@ -1,0 +1,33 @@
+.search{
+    background-color: rgba(230, 213, 213, 0.688);
+    border-radius: 5rem;
+    width: 25rem;
+    height: 2rem;
+    border: transparent;
+    color: black;
+    
+    overflow: hidden;
+    transition: 300ms;
+}
+
+.btn{
+    margin-left: 1rem;
+    border-radius: 5rem;
+    margin-top: .5rem;
+    width: 8rem;
+    height: 2rem;
+    background: linear-gradient(rgba(239, 236, 236, 0.39), rgba(240, 239, 239, 0.576));
+    border: transparent;
+    font-weight: 800;
+    margin-bottom: .5rem;
+
+    overflow: hidden;
+    transition: 300ms;
+}
+
+.btn:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+    color:rgba(0, 0, 0, 0.461);
+    background-color: rgba(209, 205, 206, 0.822);
+}
