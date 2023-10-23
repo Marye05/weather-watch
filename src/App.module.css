@@ -1,0 +1,11 @@
+body{
+  background-image: url(../src/assets/img/tree.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.app{
+  text-align: center;
+}
+
