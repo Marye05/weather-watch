@@ -7,14 +7,14 @@ const Spinner = () => {
   return (
     <div className={style.ldsellipsis}>
       <div>
-        </div>
-        <div>
-          </div>
-          <div>
-            </div>
-            <div>
-              </div>
-              </div>
+      </div>
+      <div>
+      </div>
+      <div>
+      </div>
+      <div>
+      </div>
+    </div>
   )
 }
 

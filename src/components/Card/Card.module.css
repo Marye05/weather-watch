@@ -1,7 +1,11 @@
+.card{
+    display: flex;
+    justify-content: center;
+}
+
 .container{
-    background-color: rgba(222, 184, 135, 0.694);
+    background-color: rgba(100, 148, 237, 0.665);
     width: 80%;
-    margin-left: 10%;
     display: grid;
     grid-template-rows: 100%;
     grid-template-columns: 2fr 2fr 2fr;
@@ -9,30 +13,15 @@
     padding: 10px;
     border-radius: 25px;
     box-sizing: border-box;
-    align-items: center;
-   
-    
+    align-items: center;  
 }
 
-.clim{
-    
+.clim{ 
     background-color: rgba(233, 238, 238, 0.557);
-    width: 100%;
+    width: 98%;
     height: 100%;
     border-radius: 15px;
     font-size:large;
-    
-
+    padding: 2px;
 }
 
-.temp{
-    background-color:rgba(233, 238, 238, 0.557);
-    font-size: large;
-    border-radius: 15px;
-    height: 100%;
-}
-
-.predict{
-    background-color: rgba(233, 238, 238, 0.557);
-    border-radius: 15px;
-}

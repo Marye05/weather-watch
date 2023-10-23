@@ -5,7 +5,6 @@ import style from './Card.module.css'
 
 const Card = ({ loadingData, showData, weather, forecast }) => {
     //por props la información, clima actual, pronostico, spinner
-
     let today = new Date();
     let day = today.getDate();
     let month = today.getMonth() + 1;
@@ -14,7 +13,7 @@ const Card = ({ loadingData, showData, weather, forecast }) => {
 
     //si loadingData es true q se muestre el spinner
     if( loadingData ){
-        return <Spinner />;
+        return <Spinner data-testid="spinner" />;
     }
 
     let url = "";
@@ -48,57 +47,44 @@ const Card = ({ loadingData, showData, weather, forecast }) => {
   return (
     <div>
 
-        {showData === true ? (
-            <div>
+        {showData === true &&
+            <div className={style.card}>
                 <div className={style.container}>
                     <div className={style.clim}>
-                    <h2>{weather.name}</h2>
-                    <p>{date}</p>
-                    <h1>{(weather.main.temp - 273.15).toFixed(1)}°C</h1>
-                    <p><img src={iconUrl} alt='icon' />{weather.weather[0].main}</p>
+                        <h2>{weather.name}</h2>
+                        <p>{date}</p>
+                        <h1>{(weather.main.temp - 273.15).toFixed(1)}°C</h1>
+                        <p><img src={iconUrl} alt='icon' />{weather.weather[0].main}</p>
                     </div>
-                    
-                    <div className={style.temp}>
-                    <h4>Temp Max: {(weather.main.temp_max - 273.15).toFixed(1)}°C</h4>
-                    <h4>Temp Min: {(weather.main.temp_min - 273.15).toFixed(1)}°C</h4>
-                    <h4>Thermal sensation: {(weather.main.feels_like - 273.15).toFixed(1)}°C</h4>
-                    <h4>Humidity: {weather.main.humidity}%</h4>
-                    <h4>Wind speed: {weather.wind.speed}m/s</h4>
+                        
+                    <div className={style.clim}>
+                        <h4>Temp Max: {(weather.main.temp_max - 273.15).toFixed(1)}°C</h4>
+                        <h4>Temp Min: {(weather.main.temp_min - 273.15).toFixed(1)}°C</h4>
+                        <h4>Thermal sensation: {(weather.main.feels_like - 273.15).toFixed(1)}°C</h4>
+                        <h4>Humidity: {weather.main.humidity}%</h4>
+                        <h4>Wind speed: {weather.wind.speed}m/s</h4>
                     </div>
                  
-                    <div className={style.predict}>
-                    <h2>Time Prediction</h2>
+                    <div className={style.clim}>
+                        <h2>Time Prediction</h2>
 
-                    <p>{forecastDate3}h</p>
-                    <p><img src={urlIcon3} alt='icon' />{forecast.list[0].weather[0].main}</p>
-                    <p>{(forecast.list[0].main.temp - 273.15).toFixed(1)}°C</p>
+                        <p>{forecastDate3}h</p>
+                        <p><img src={urlIcon3} alt='icon' />{forecast.list[0].weather[0].main}</p>
+                        <p>{(forecast.list[0].main.temp - 273.15).toFixed(1)}°C</p>
 
-                    <p>{forecastDate6}h</p>
-                    <p><img src={urlIcon6} alt='icon' />{forecast.list[1].weather[0].main}</p>
-                    <p>{(forecast.list[1].main.temp - 273.15).toFixed(1)}°C</p>
+                        <p>{forecastDate6}h</p>
+                        <p><img src={urlIcon6} alt='icon' />{forecast.list[1].weather[0].main}</p>
+                        <p>{(forecast.list[1].main.temp - 273.15).toFixed(1)}°C</p>
 
-                    <p>{forecastDate9}h</p>
-                    <p><img src={urlIcon9} alt='icon' />{forecast.list[2].weather[0].main}</p>
-                    <p>{(forecast.list[2].main.temp - 273.15).toFixed(1)}°C</p>
+                        <p>{forecastDate9}h</p>
+                        <p><img src={urlIcon9} alt='icon' />{forecast.list[2].weather[0].main}</p>
+                        <p>{(forecast.list[2].main.temp - 273.15).toFixed(1)}°C</p>
                     </div>
                     
                 </div>
 
             </div>
-
-
-
-
-
-        ) : (
-            <h2>Sin Datos</h2>
-        )
-
-
         }
-
-
-
 
     </div>
   )
