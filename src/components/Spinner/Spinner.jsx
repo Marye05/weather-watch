@@ -5,7 +5,7 @@ const Spinner = () => {
 
 
   return (
-    <div className={style.ldsellipsis}>
+    <div data-testid="spinner" className={style.ldsellipsis}>
       <div>
       </div>
       <div>

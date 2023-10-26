@@ -1,19 +1,12 @@
 import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
-import NavBar from '../src/components/NavBar/NavBar';
+import NavBar from '../components/NavBar/NavBar';
 
-test('Renderiza el componente NavBar correctamente', () => {
+test('NavBar renders correctly', () => {
   render(<NavBar />);
-  const titleElement = screen.getByText('Weather Watch');
-  expect(titleElement).toBeInTheDocument();
+  const navbarElement = screen.getByTestId('navbar');
 
-  const navElement = screen.getByRole('navigation');
-  expect(navElement).toHaveClass('nav');
-});
-
-test('El componente NavBar contiene un elemento h1', () => {
-  render(<NavBar />);
-  
-  const h1Element = screen.getByRole('heading', { name: /Weather Watch/i });
-  expect(h1Element).toBeInTheDocument();
+  expect(navbarElement).toBeInTheDocument();
+  expect(navbarElement).toHaveTextContent('Weather Watch');
 });

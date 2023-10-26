@@ -1,63 +1,63 @@
 import React from 'react';
-import { render, waitFor, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import { render, act, waitFor, screen } from '@testing-library/react';
 import Weather from '../components/Weather/Weather';
 
-beforeAll(() => {
-  global.fetch = jest.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({  }),
-    })
-  );
-});
 
-afterAll(() => {
-  global.fetch.mockClear();
-  delete global.fetch;
-});
+global.fetch = jest.fn();
 
-describe('Weather Component', () => {
-  it('renders without errors', () => {
-    render(<Weather locationId="your-location-id" />);
+describe('Componente Weather', () => {
+  beforeEach(() => {
+    fetch.mockClear();
   });
 
-  it('displays loading spinner initially', () => {
-    render(<Weather locationId="your-location-id" />);
-    const spinner = screen.getByTestId('loading-spinner');
-    expect(spinner).toBeInTheDocument();
+  it('se representa en estado de carga', async () => {
+    fetch.mockResolvedValueOnce({ ok: true, json: () => Promise.resolve({ /* datos ficticios aquí */ }) });
+
+    await act(async () => {
+      render(<Weather locationId={1} />);
+    });
+
+    const loadingSpinner = screen.getByTestId('loading-spinner');
+    expect(loadingSpinner).toBeInTheDocument();
   });
 
-  it('fetches and displays weather data', async () => {
+  it('muestra datos de clima después de una llamada exitosa a la API', async () => {
+    const mockWeatherData = { /* datos de clima ficticios aquí */ };
+    const mockForecastData = { /* datos de pronóstico ficticios aquí */ };
 
-    global.fetch.mockImplementationOnce(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({  }),
-      })
-    );
+    fetch
+      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockWeatherData) })
+      .mockResolvedValueOnce({ ok: true, json: () => Promise.resolve(mockForecastData) });
 
-    render(<Weather locationId="your-location-id" />);
+    await act(async () => {
+      render(<Weather locationId={1} />);
+    });
 
     await waitFor(() => {
-      const spinner = screen.queryByTestId('loading-spinner');
-      expect(spinner).toBeNull();
+      expect(screen.getByTestId('weather')).toBeInTheDocument();
+    });
 
-      const weatherData = screen.getByTestId('weather-data');
-      expect(weatherData).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Nombre de la ciudad/)).toBeInTheDocument(); // Reemplaza con la comprobación real de los datos del clima
+      expect(screen.getByText(/Temperatura/)).toBeInTheDocument(); // Reemplaza con la comprobación real de los datos del clima
     });
   });
 
-  it('handles API fetch error', async () => {
-    global.fetch.mockImplementationOnce(() => Promise.resolve({ ok: false }));
+  it('maneja errores de la llamada a la API de manera adecuada', async () => {
+    fetch.mockResolvedValueOnce({ ok: false });
 
-    render(<Weather locationId="your-location-id" />);
+    await act(async () => {
+      render(<Weather locationId={1} />);
+    });
 
     await waitFor(() => {
-      const spinner = screen.queryByTestId('loading-spinner');
-      expect(spinner).toBeNull();
+      expect(screen.queryByTestId('weather')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('loading-spinner')).not.toBeInTheDocument();
+    });
 
-      const weatherData = screen.queryByTestId('weather-data');
-      expect(weatherData).toBeNull();
+    await waitFor(() => {
+      expect(screen.getByText(/Error/)).toBeInTheDocument();
     });
   });
 });

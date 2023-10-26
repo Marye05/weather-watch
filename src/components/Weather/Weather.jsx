@@ -40,7 +40,7 @@ const Weather = ({locationId }) => {
   }, [locationId, urlForecast, urlWeather])
    
   return(
-    <div>
+    <div data-testid="weather">
     <Card
     showData = {show}
     loadingData = {loading}

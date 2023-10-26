@@ -1,66 +1,57 @@
-import Card from '../components/Card/Card';
 import React from 'react';
+import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
-import Spinner from '../components/Spinner/Spinner'
+import Card from '../components/Card/Card';
+
+const mockWeather = {
+  name: 'City',
+  main: {
+    temp: 288.15,
+    temp_max: 290.15,
+    temp_min: 286.15,
+    feels_like: 289.15,
+    humidity: 60,
+  },
+  weather: [{ main: 'Clear', icon: '01d' }],
+  wind: { speed: 5 },
+};
+
+const mockForecast = {
+  list: [
+    {
+      dt_txt: '2023-10-25 12:00:00',
+      weather: [{ main: 'Clear', icon: '01d' }],
+      main: { temp: 290.15 },
+    },
+    {
+      dt_txt: '2023-10-25 15:00:00',
+      weather: [{ main: 'Clear', icon: '01d' }],
+      main: { temp: 292.15 },
+    },
+    {
+      dt_txt: '2023-10-25 18:00:00',
+      weather: [{ main: 'Clear', icon: '01d' }],
+      main: { temp: 288.15 },
+    },
+  ],
+};
 
 describe('Card Component', () => {
-  it('renders the spinner when loadingData is true', () => {
+  it('should render a spinner when loadingData is true', () => {
     render(<Card loadingData={true} showData={false} />);
     const spinner = screen.getByTestId('spinner');
-    expect(spinner).toBeTruthy();
+    expect(spinner).toBeInTheDocument();
   });
 
-  it('renders weather information when showData is true', () => {
-    const weatherData = {
-      name: 'City',
-      main: {
-        temp: 298.15, 
-        temp_max: 303.15,
-        temp_min: 293.15,
-        feels_like: 298.15,
-        humidity: 50,
-      },
-      weather: [
-        {
-          icon: '01d', // Icon code
-          main: 'Clear',
-        },
-      ],
-      wind: {
-        speed: 3.5,
-      },
-    };
-
-    const forecastData = {
-      list: [
-        {
-          dt_txt: '2023-10-22 12:00:00',
-          main: {
-            temp: 298.15, 
-          },
-          weather: [
-            {
-              icon: '02d', 
-              main: 'Clouds',
-            },
-          ],
-        },
-      ],
-    };
-
+  it('should render weather and forecast data when showData is true', () => {
     render(
-      <Card
-        loadingData={false}
-        showData={true}
-        weather={weatherData}
-        forecast={forecastData}
-      />
+      <Card loadingData={false} showData={true} weather={mockWeather} forecast={mockForecast} />
     );
+    expect(screen.getByText('City')).toBeInTheDocument();
+    expect(screen.getByText('25/10/2023')).toBeInTheDocument();
 
-    const card = screen.getByRole('card'); 
-    const clim = screen.getAllByRole('clim'); 
-
-    expect(card).toBeTruthy();
-    expect(clim).toHaveLength(3); 
+    const temperatureElements = screen.getAllByText('15.0°C');
+    expect(temperatureElements[0]).toBeInTheDocument();
+    
   });
 });

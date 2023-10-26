@@ -46,7 +46,7 @@ import Weather from './Weather';
       };
       
       return (
-        <div>
+        <div data-testid="search">
         <div className={style.searchcontainer}>
           <div className={style.searchbox}>
             <input
